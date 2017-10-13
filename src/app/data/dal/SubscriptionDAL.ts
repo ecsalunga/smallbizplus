@@ -10,12 +10,14 @@ export class SubscriptionDAL {
     constructor(private core: Core, private DL: DataLayer, private af: AngularFireDatabase) {}
 
     public Load() {
-        this.af.list(this.PATH, { query: { orderByChild: 'Name' }}).first().subscribe(snapshots => {
+        this.af.list(this.PATH, ref => {
+            return ref.orderByChild('Name');
+        }).snapshotChanges().first().subscribe(snapshots => {
             this.DL.Subscriptions = new Array<SubscriptionInfo>();
 
             snapshots.forEach(snapshot => {
-                let info: SubscriptionInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: SubscriptionInfo = snapshot.payload.val();
+                info.key = snapshot.key;
                 this.DL.Subscriptions.push(info);
             });
             
@@ -34,9 +36,11 @@ export class SubscriptionDAL {
     }
 
     GenerateQuota(quota: QuotaInfo, keyDay: number) {
-        this.af.list(this.PATH_TRANS, { query: { orderByChild: this.DL.KEYDAY, equalTo: keyDay }}).first().subscribe(snapshots => {
+        this.af.list(this.PATH_TRANS, ref => {
+            return ref.orderByChild(this.DL.KEYDAY).equalTo(keyDay);
+        }).snapshotChanges().first().subscribe(snapshots => {
             snapshots.forEach(snapshot => {
-                let info: TransactionInfo = snapshot;
+                let info: TransactionInfo = snapshot.payload.val();
                 
                 if(quota.Subscribers.some(mem => info.MemberKey == mem.Value1))
                     this.transactionToQuota(info, quota);
@@ -94,12 +98,14 @@ export class SubscriptionDAL {
     }
 
     public LoadQuota() {
-        this.af.list(this.PATH_QUOTA, { query: { orderByChild: 'ActionDate' }}).first().subscribe(snapshots => {
+        this.af.list(this.PATH_QUOTA, ref => {
+            return ref.orderByChild('ActionDate');
+        }).snapshotChanges().first().subscribe(snapshots => {
             this.DL.SubscriptionQuotas = new Array<QuotaInfo>();
 
             snapshots.forEach(snapshot => {
-                let info: QuotaInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: QuotaInfo = snapshot.payload.val();
+                info.key = snapshot.key;
                 this.DL.SubscriptionQuotas.push(info);
             });
 

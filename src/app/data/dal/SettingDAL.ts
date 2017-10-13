@@ -9,16 +9,16 @@ export class SettingDAL {
     constructor(private DL: DataLayer, private af: AngularFireDatabase) { }
 
     public ModuleLoad() {
-        this.af.object(this.PATH_MODULE).first().subscribe(snapshot => {
-            if (snapshot.$exists())
-                this.DL.ModuleSetting = snapshot;
+        this.af.object(this.PATH_MODULE).snapshotChanges().first().subscribe(snapshot => {
+            if (snapshot.payload.exists())
+                this.DL.ModuleSetting = snapshot.payload.val();
         });
     }
 
     public SystemLoad() {
-        this.af.object(this.PATH_SYSTEM).first().subscribe(snapshot => {
-            if (snapshot.$exists()) {
-                this.DL.SystemSetting = snapshot;
+        this.af.object(this.PATH_SYSTEM).snapshotChanges().first().subscribe(snapshot => {
+            if (snapshot.payload.exists()) {
+                this.DL.SystemSetting = snapshot.payload.val();
                 this.DL.SetSystemConfig();
             }
         });

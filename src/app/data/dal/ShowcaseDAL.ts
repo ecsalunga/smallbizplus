@@ -10,13 +10,15 @@ export class ShowcaseDAL {
     constructor(private core: Core, private DL: DataLayer, private af: AngularFireDatabase) {}
 
     public Load() {
-        this.af.list(this.PATH, { query: { orderByChild: 'Order' } }).first().subscribe(snapshots => {
+        this.af.list(this.PATH, ref => {
+            return ref.orderByChild('Order');
+        }).snapshotChanges().first().subscribe(snapshots => {
             this.DL.Showcases = new Array<ShowcaseInfo>();
             this.DL.ShowcaseToday = new Array<ShowcaseInfo>();
 
             snapshots.forEach(snapshot => {
-                let info: ShowcaseInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: ShowcaseInfo = snapshot.payload.val();
+                info.key = snapshot.key;
                 this.DL.Showcases.push(info);
 
                 // get showcase for today
@@ -38,7 +40,9 @@ export class ShowcaseDAL {
     }
 
     public LoadOrder() {
-        this.af.list(this.PATH_ORDER, { query: { orderByChild: 'ActionDate' } }).subscribe(snapshots => {
+        this.af.list(this.PATH_ORDER, ref => {
+            return ref.orderByChild('ActionDate');
+        }).snapshotChanges().subscribe(snapshots => {
             this.DL.ShowcaseOrders = new Array<OrderInfo>();
             this.DL.ShowcaseUserDoneOrders = new Array<OrderInfo>();
             this.DL.ShowcaseUserSelectingOrders = new Array<OrderInfo>();
@@ -47,8 +51,8 @@ export class ShowcaseDAL {
             this.DL.ShowcaseUserHasOpenCart = false;
 
             snapshots.forEach(snapshot => {
-                let info: OrderInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: OrderInfo = snapshot.payload.val();
+                info.key = snapshot.key;
 
                 if(info.Status == this.DL.STATUS_SELECTING)
                     this.DL.ShowcaseUserSelectingOrders.push(info);

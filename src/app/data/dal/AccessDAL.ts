@@ -7,11 +7,13 @@ export class AccessDAL {
     constructor(private DL: DataLayer, private af: AngularFireDatabase) { }
 
     public Load() {
-        this.af.list(this.PATH, { query: { orderByChild: 'Name' } }).subscribe(snapshots => {
+        this.af.list(this.PATH, ref => {
+            return ref.orderByChild('Name');
+        }).snapshotChanges().subscribe(snapshots => {
             this.DL.Accesses = new Array<AccessInfo>();
             snapshots.forEach(snapshot => {
-                let info: AccessInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: AccessInfo = snapshot.payload.val();
+                info.key = snapshot.key;
                 this.DL.Accesses.push(info);
 
                 // update current user access

@@ -7,14 +7,16 @@ export class ArticleDAL {
     constructor(private DL: DataLayer, private af: AngularFireDatabase) { }
 
     public Load() {
-        this.af.list(this.PATH, { query: { orderByChild: 'Order' } }).first().subscribe(snapshots => {
+        this.af.list(this.PATH, ref => {
+            return ref.orderByChild('Order');
+        }).snapshotChanges().first().subscribe(snapshots => {
             this.DL.Articles = new Array<ArticleInfo>();
             this.DL.ArticleLive = new Array<ArticleInfo>();
             this.DL.ArticleCount = 0;
 
             snapshots.forEach(snapshot => {
-                let info: ArticleInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: ArticleInfo = snapshot.payload.val();
+                info.key = snapshot.key;
                 this.DL.Articles.push(info);
 
                 if(info.IsActive)

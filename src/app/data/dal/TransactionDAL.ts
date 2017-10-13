@@ -9,18 +9,20 @@ export class TransactionDAL {
     constructor(private core: Core, private DL: DataLayer, private DA: DataAccess, private af: AngularFireDatabase) {}
 
     LoadByKeyDay(keyDay: number) {
-        this.af.list(this.PATH, { query: { orderByChild: this.DL.KEYDAY, equalTo: keyDay } }).first().subscribe(snapshots => {
+        this.af.list(this.PATH, ref => {
+            return ref.orderByChild(this.DL.KEYDAY).equalTo(keyDay);
+        }).snapshotChanges().first().subscribe(snapshots => {
             this.DL.Transactions = new Array<TransactionInfo>();
             this.DL.ReportSelected.SaleCount = 0;
             this.DL.ReportSelected.SaleAmount = 0;
 
             snapshots.forEach(snapshot => {
-                let info: TransactionInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: TransactionInfo = snapshot.payload.val();
+                info.key = snapshot.key;
                 this.DL.Transactions.push(info);
 
-                this.DL.ReportSelected.SaleCount += snapshot.Count;
-                this.DL.ReportSelected.SaleAmount += snapshot.Amount;
+                this.DL.ReportSelected.SaleCount += info.Count;
+                this.DL.ReportSelected.SaleAmount += info.Amount;
             });
 
             this.DL.Transactions.reverse();
@@ -28,12 +30,12 @@ export class TransactionDAL {
     }
 
     public LoadDelivery() {
-        this.af.list(this.PATH_DELIVERY).subscribe(snapshots => {
+        this.af.list(this.PATH_DELIVERY).snapshotChanges().subscribe(snapshots => {
             this.DL.DeliveryInfos = new Array<DeliveryInfo>();
 
             snapshots.forEach(snapshot => {
-                let info: DeliveryInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: DeliveryInfo = snapshot.payload.val();
+                info.key = snapshot.key;
                 this.DL.DeliveryInfos.push(info);
                 
                 if(this.DL.DeliveryToggledModule != null && this.DL.DeliveryStamp > 0 && info.ActionStart == this.DL.DeliveryStamp)

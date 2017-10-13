@@ -7,11 +7,13 @@ export class SnapshotDAL {
     constructor(private DL: DataLayer, private af: AngularFireDatabase) { }
 
     public Load(keyDay: number) {
-        this.af.list(this.PATH, { query: { orderByChild: this.DL.KEYDAY, equalTo: keyDay } }).first().subscribe(snapshots => {
+        this.af.list(this.PATH, ref => {
+            return ref.orderByChild(this.DL.KEYDAY).equalTo(keyDay);
+        }).snapshotChanges().first().subscribe(snapshots => {
             this.DL.Snapshots = new Array<SnapshotInfo>();
             snapshots.forEach(snapshot => {
-                let info: SnapshotInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: SnapshotInfo = snapshot.payload.val();
+                info.key = snapshot.key;
                 this.DL.Snapshots.push(info);
             });
         });

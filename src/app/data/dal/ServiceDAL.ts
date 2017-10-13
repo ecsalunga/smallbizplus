@@ -9,13 +9,15 @@ export class ServiceDAL {
     constructor(private core: Core, private DL: DataLayer, private af: AngularFireDatabase) {}
 
     public Load() {
-        this.af.list(this.PATH, { query: { orderByChild: 'Order' }}).first().subscribe(snapshots => {
+        this.af.list(this.PATH, ref => {
+            return ref.orderByChild('Order');
+        }).snapshotChanges().first().subscribe(snapshots => {
             this.DL.Services = new Array<ServiceInfo>();
             this.DL.ServiceToday = new Array<ServiceInfo>();
 
             snapshots.forEach(snapshot => {
-                let info: ServiceInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: ServiceInfo = snapshot.payload.val();
+                info.key = snapshot.key;
                 this.DL.Services.push(info);
 
                 // get services for today
@@ -37,7 +39,9 @@ export class ServiceDAL {
     }
 
     public LoadReservation() {
-        this.af.list(this.PATH_RESERVE, { query: { orderByChild: 'ActionDate' } }).subscribe(snapshots => {
+        this.af.list(this.PATH_RESERVE, ref => {
+            return ref.orderByChild('ActionDate');
+        }).snapshotChanges().subscribe(snapshots => {
             this.DL.ServiceReservationUser = new Array<ReservationInfo>();
             this.DL.ServiceReservationActive = new Array<ReservationInfo>();
             this.DL.ServiceReservationDone = new Array<ReservationInfo>();
@@ -45,8 +49,8 @@ export class ServiceDAL {
             this.DL.ServiceReservationUserHasItem = false;
 
             snapshots.forEach(snapshot => {
-                let info: ReservationInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: ReservationInfo = snapshot.payload.val();
+                info.key = snapshot.key;
 
                 if(info.Status == this.DL.STATUS_REQUESTED)
                     this.DL.ServiceReservationNew.push(info);

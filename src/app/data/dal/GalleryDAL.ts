@@ -8,12 +8,14 @@ export class GalleryDAL {
     constructor(private DL: DataLayer, private af: AngularFireDatabase) {}
 
     public Load() {
-        this.af.list(this.PATH, { query: { orderByChild: 'Order' }}).first().subscribe(snapshots => {
+        this.af.list(this.PATH, ref => {
+            return ref.orderByChild('Order');
+        }).snapshotChanges().first().subscribe(snapshots => {
             this.DL.Galleries = new Array<GalleryInfo>();
             this.DL.GalleryActive = new Array<GalleryInfo>();
             snapshots.forEach(snapshot => {
-                let info: GalleryInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: GalleryInfo = snapshot.payload.val();
+                info.key = snapshot.key;
                 this.DL.Galleries.push(info);
 
                 if(info.IsActive)
@@ -25,11 +27,13 @@ export class GalleryDAL {
     }
 
     public LoadPhotos() {
-        this.af.list(this.PATH_PHOTO, { query: { orderByChild: 'GalleryKey' } }).subscribe(snapshots => {
+        this.af.list(this.PATH_PHOTO, ref => {
+            return ref.orderByChild('GalleryKey');
+        }).snapshotChanges().subscribe(snapshots => {
             this.DL.GalleryPhotos = new Array<GalleryPhotoInfo>();
             snapshots.forEach(snapshot => {
-                let info: GalleryPhotoInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: GalleryPhotoInfo = snapshot.payload.val();
+                info.key = snapshot.key;
                 this.DL.GalleryPhotos.push(info);
             });
         });

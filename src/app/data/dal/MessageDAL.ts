@@ -11,23 +11,27 @@ export class MessageDAL {
     constructor(private DL: DataLayer, private DA: DataAccess, private af: AngularFireDatabase) { }
 
     public Load() {
-        this.af.list(this.PATH, { query: { orderByChild: 'ActionDate' } }).subscribe(snapshots => {
+        this.af.list(this.PATH, ref => {
+            return ref.orderByChild('ActionDate');
+        }).snapshotChanges().subscribe(snapshots => {
             this.DL.Conversations = new Array<ConversationInfo>();
             snapshots.forEach(snapshot => {
-                let info: ConversationInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: ConversationInfo = snapshot.payload.val();
+                info.key = snapshot.key;
 
                 if(this.DL.User.key == info.FromKey || this.DL.User.key == info.ToKey)
                     this.DL.Conversations.push(info);
             });
 
             if(!this.DL.IsMessageLoaded) {
-                this.af.list(this.PATH_MESSAGE, { query: { orderByChild: 'ConversationKey' } }).subscribe(snapshots => {
+                this.af.list(this.PATH_MESSAGE, ref => {
+                    return ref.orderByChild('ConversationKey');
+                }).snapshotChanges().subscribe(snapshots => {
                     this.DL.Messages = new Array<MessageInfo>();
         
                     snapshots.forEach(snapshot => {
-                        let info: MessageInfo = snapshot;
-                        info.key = snapshot.$key;
+                        let info: MessageInfo = snapshot.payload.val();
+                        info.key = snapshot.key;
         
                         if(this.DL.Conversation && this.DL.Conversation.key == info.ConversationKey) {
                             this.DL.Messages.push(info);
@@ -49,12 +53,14 @@ export class MessageDAL {
     }
 
     public GetMessages(item: ConversationInfo) {
-        this.af.list(this.PATH_MESSAGE, { query: { orderByChild: 'ConversationKey', equalTo: item.key } }).first().subscribe(snapshots => {
+        this.af.list(this.PATH_MESSAGE, ref => {
+            return ref.orderByChild('ConversationKey').equalTo(item.key);
+        }).snapshotChanges().first().subscribe(snapshots => {
             this.DL.Messages = new Array<MessageInfo>();
 
             snapshots.forEach(snapshot => {
-                let info: MessageInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: MessageInfo = snapshot.payload.val();
+                info.key = snapshot.key;
 
                 if(item.key == info.ConversationKey) {
                     this.DL.Messages.push(info);

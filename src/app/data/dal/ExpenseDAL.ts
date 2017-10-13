@@ -10,13 +10,15 @@ export class ExpenseDAL {
     constructor(private core: Core, private DL: DataLayer, private DA: DataAccess, private af: AngularFireDatabase) {}
 
     LoadByYearAndMonth(selectedYear: number, selectedMonth: number) {
-        this.af.list(this.PATH, { query: { orderByChild: this.DL.KEYMONTH, equalTo: parseInt(selectedYear + this.core.az(selectedMonth)) }}).first().subscribe(snapshots => {
+        this.af.list(this.PATH, ref => {
+            return ref.orderByChild(this.DL.KEYMONTH).equalTo(parseInt(selectedYear + this.core.az(selectedMonth)));
+        }).snapshotChanges().first().subscribe(snapshots => {
             this.DL.Expenses = new Array<ExpenseInfo>();
             this.DL.ExpenseTotal = 0;
 
             snapshots.forEach(snapshot => {
-                let info: ExpenseInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: ExpenseInfo = snapshot.payload.val();
+                info.key = snapshot.key;
                 this.DL.Expenses.push(info);
                 this.DL.ExpenseTotal += info.Amount;
             });
@@ -27,12 +29,12 @@ export class ExpenseDAL {
     }
 
     LoadTypes() {
-        this.af.list(this.PATH_TYPES).first().subscribe(snapshots => {
+        this.af.list(this.PATH_TYPES).snapshotChanges().first().subscribe(snapshots => {
             this.DL.ExpenseTypes = new Array<NameValue>();
 
             snapshots.forEach(snapshot => {
-                let info: NameValue = snapshot;
-                info.Value = snapshot.$key;
+                let info: NameValue = snapshot.payload.val();
+                info.Value = snapshot.key;
                 this.DL.ExpenseTypes.push(info);
             });
 

@@ -9,10 +9,12 @@ export class CancelDAL {
     constructor(private core: Core, private DL: DataLayer, private DA: DataAccess, private af: AngularFireDatabase) {}
 
     LoadByYearAndMonth(selectedYear: number, selectedMonth: number) {
-        this.af.list(this.PATH, { query: { orderByChild: this.DL.KEYMONTH, equalTo: parseInt(selectedYear + this.core.az(selectedMonth)) }}).first().subscribe(snapshots => {
+        this.af.list(this.PATH, ref => {
+            return ref.orderByChild(this.DL.KEYMONTH).equalTo(parseInt(selectedYear + this.core.az(selectedMonth)));
+        }).snapshotChanges().first().subscribe(snapshots => {
             this.DL.TransactionCancels = new Array<CancelInfo>();
             snapshots.forEach(snapshot => {
-                let info: CancelInfo = snapshot;
+                let info: CancelInfo = snapshot.payload.val();
                 this.DL.TransactionCancels.push(info);
             });
 

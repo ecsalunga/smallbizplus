@@ -137,10 +137,10 @@ export class DataAccess {
     }
 
     public CommandLoad() {
-        this.af.list(this.COMMAND).subscribe(snapshots => {
+        this.af.list(this.COMMAND).snapshotChanges().subscribe(snapshots => {
             snapshots.forEach(snapshot => {
-                let info: CommandInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: CommandInfo = snapshot.payload.val();
+                info.key = snapshot.key;
 
                 if (this.DL.User.key == info.UserKey)
                     this.CommandExecute(info);
@@ -188,18 +188,22 @@ export class DataAccess {
     }
 
     public CommandSave(item: CommandInfo) {
-        this.af.list(this.COMMAND, { query: { orderByChild: 'UserKey', equalTo: item.UserKey } }).first().subscribe(snapshots => {
+        this.af.list(this.COMMAND, ref => {
+            return ref.orderByChild('UserKey').equalTo(item.UserKey);
+        }).snapshotChanges().first().subscribe(snapshots => {
             snapshots.forEach(snapshot => {
-                this.af.list(this.COMMAND).remove(snapshot.$key);
+                this.af.list(this.COMMAND).remove(snapshot.key);
             });
             this.af.list(this.COMMAND).push(item);
         });
     }
 
     public CommandDelete(userKey: string) {
-        this.af.list(this.COMMAND, { query: { orderByChild: 'UserKey', equalTo: userKey } }).first().subscribe(snapshots => {
+        this.af.list(this.COMMAND, ref => {
+            return ref.orderByChild('UserKey').equalTo(userKey);
+        }).snapshotChanges().first().subscribe(snapshots => {
             snapshots.forEach(snapshot => {
-                this.af.list(this.COMMAND).remove(snapshot.$key);
+                this.af.list(this.COMMAND).remove(snapshot.key);
             });
         });
     }
@@ -292,7 +296,9 @@ export class DataAccess {
     }
 
     UserLoad() {
-        this.af.list(this.USERS, { query: { orderByChild: 'Name' } }).subscribe(snapshots => {
+        this.af.list(this.USERS, ref => {
+            return ref.orderByChild('Name');
+        }).snapshotChanges().subscribe(snapshots => {
             this.DL.Users = new Array<UserInfo>();
             this.DL.UserAll = new Array<UserInfo>();
             this.DL.UserBorrow = new Array<UserInfo>();
@@ -303,8 +309,8 @@ export class DataAccess {
             this.DL.MemberSelections = new Array<UserInfo>();
 
             snapshots.forEach(snapshot => {
-                let info: UserInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: UserInfo = snapshot.payload.val();
+                info.key = snapshot.key;
 
                 if (info.IsSystemUser)
                     this.DL.Users.push(info);

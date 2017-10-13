@@ -7,15 +7,17 @@ export class ProductDAL {
     constructor(private DL: DataLayer, private af: AngularFireDatabase) {}
 
     public Load() {
-        this.af.list(this.PATH, { query: { orderByChild: 'Description' } }).subscribe(snapshots => {
+        this.af.list(this.PATH, ref => {
+            return ref.orderByChild('Description');
+        }).snapshotChanges().subscribe(snapshots => {
             this.DL.Products = new Array<ProductInfo>();
             this.DL.ProductBorrow = new Array<ProductInfo>();
             this.DL.ProductSelections = new Array<ProductInfo>();
             this.DL.ProductBorrowCount = 0;
 
             snapshots.forEach(snapshot => {
-                let info: ProductInfo = snapshot;
-                info.key = snapshot.$key;
+                let info: ProductInfo = snapshot.payload.val();
+                info.key = snapshot.key;
                 this.DL.Products.push(info);
                 
                 if (info.Quantity > 0)
