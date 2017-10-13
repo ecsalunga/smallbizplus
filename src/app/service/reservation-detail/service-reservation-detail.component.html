@@ -1,0 +1,114 @@
+<div>
+  <div class="item">
+    <div class="itemHeader">
+      <div class="itemName">Actions</div>
+    </div>
+    <div class="itemSub">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              Action
+            </th>
+            <th>
+              Date
+            </th>
+          </tr>
+        </thead>
+        <ng-container *ngFor="let info of model.Actions">
+          <tr>
+            <td>
+              {{ info.Name }}
+            </td>
+            <td>
+              {{ GetDate(info.Value) | date : 'short' }}
+            </td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+  </div>
+  <div>
+    <md-form-field class="longText">
+      <input id="txtService" readonly mdInput placeholder="Service" [(ngModel)]="model.Name" />
+    </md-form-field>
+  </div>
+  <ng-container *ngIf="model.BookingType == DL.BOOKING_TYPE_DAY; else elseHour">
+    <div>
+      <md-form-field class="longText">
+        <input id="txtDate" readonly mdInput placeholder="Date Range" value="{{ GetDay(model.From) | date : 'mediumDate' }} to {{ GetDay(model.To) | date : 'mediumDate' }}" />
+      </md-form-field>
+    </div>
+  </ng-container>
+  <ng-template #elseHour>
+    <div>
+      <md-form-field class="schedule">
+        <input id="txtDate" readonly mdInput placeholder="Schedule" value="{{ GetDay(model.From) | date : 'mediumDate' }} @ {{ GetSchedule() }}" />
+      </md-form-field>
+    </div>
+  </ng-template>
+  <div *ngIf="model.Price != null && model.Price > 0">
+    <md-form-field class="shortText">
+      <input id="txtPrice" readonly mdInput placeholder="Price" value="{{ DL.CURRENCY }} {{ model.Price | number:'1.2-2' }}" />
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field class="shortText">
+      <input id="txtQuantity" readonly mdInput placeholder="{{ model.BookingType == DL.BOOKING_TYPE_DAY ? 'Number of days' : 'Number of hours' }}" [(ngModel)]="model.Count" />
+    </md-form-field>
+  </div>
+  <div *ngIf="model.Price != null && model.Price > 0">
+    <md-form-field class="shortText">
+      <input id="txtTotal" readonly mdInput placeholder="Total" value="{{ DL.CURRENCY }} {{ model.Count * model.Price | number:'1.2-2' }}" />
+    </md-form-field>
+  </div>
+  <div>
+  <ng-container *ngIf="DL.SOURCE != DL.PUBLIC; else reserveLink">
+    <div>
+      <md-form-field class="longText">
+        <input id="txtBuyer" mdInput readonly placeholder="Member" [(ngModel)]="model.MemberName" />
+      </md-form-field>
+    </div>
+    <div class="selectionRow">
+      <md-select [disabled]="!CanSave()" placeholder="Status" class="longText" [(ngModel)]="selectedStatus">
+        <md-option *ngFor="let status of DL.ServiceReservationStatuses" [value]="status">
+          {{ status }}
+        </md-option>
+      </md-select>
+    </div>
+    <div class="vSmallSpacer"></div>
+    <div>
+      <md-form-field class="fullWidth">
+        <textarea [disabled]="!CanSave()" id="txtNote" mdInput placeholder="Note" [(ngModel)]="model.Note"></textarea>
+      </md-form-field>
+    </div>
+    <div class="hSpacer"></div>
+    <table>
+        <tr class="rightRow">
+          <td *ngIf="ShowGenerateTransaction()">
+            <button md-fab color="primary" (click)="GenerateTransaction()" mdTooltip="Generate transaction" mdTooltipPosition="above"><md-icon>receipt</md-icon></button>
+          </td>
+          <td>
+            <button md-fab *ngIf="CanDelete()" color="warn" (click)="Delete()" [disabled]="!DL.UserAccess.ServiceReservationDelete" mdTooltip="Delete" mdTooltipPosition="above"><md-icon>delete</md-icon></button>
+            <button md-fab *ngIf="CanSave()" (click)="Save()" mdTooltip="Save" mdTooltipPosition="above"><md-icon>save</md-icon></button>
+            <button md-fab (click)="LoadList()" mdTooltip="Back to list" mdTooltipPosition="above"><md-icon>assignment_return</md-icon></button>
+          </td>
+        </tr>
+      </table>
+  </ng-container>
+  <ng-template #reserveLink>
+    <div *ngIf="model.Note != ''">
+      <div class="note">Note</div>
+      <div class="mainColor">
+        {{ model.Note }}
+      </div>
+    </div>
+    <div class="hSpacer"></div>
+    <div class="rightRow mainColor">
+      <button md-raised-button (click)="BackToPublic()" mdTooltip="Back to booking" mdTooltipPosition="above">
+        <md-icon>assignment_return</md-icon>
+        <span>Back to booking</span>
+      </button>
+    </div>
+  </ng-template>
+</div>

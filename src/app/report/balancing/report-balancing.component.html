@@ -1,0 +1,64 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Date
+        </th>
+        <th class="totalColumn">
+          Sales
+        </th>
+        <th class="totalColumn">
+          Expenses
+        </th>
+        <th class="totalColumn">
+          Start CoH
+        </th>
+        <th class="totalColumn" mdTooltip="Computed vs Actual CoH">
+          A/C CoH
+        </th>
+      </tr>
+    </thead>
+    <ng-container *ngFor="let item of DL.Reports">
+      <tr>
+        <td>
+          {{ GetDate(item.KeyDay) | date : 'yyyy-MM-dd' }}
+        </td>
+        <td class="totalColumn">
+          {{item.SaleAmount | number:'1.2-2'}}
+        </td>
+        <td class="totalColumn">
+          {{item.ExpenseAmount | number:'1.2-2'}}
+        </td>
+        <td class="totalColumn">
+          {{item.COHStart | number:'1.2-2'}}
+        </td>
+        <td class="totalColumn {{ (GetComputed(item) == GetActual(item)) ?  'good' : 'bad' }}">
+          {{ GetActual(item) | number:'1.2-2'}} / {{ GetComputed(item) | number:'1.2-2' }}
+        </td>
+      </tr>
+    </ng-container>
+  </table>
+  <div class="hSpacer"></div>
+  <table>
+    <tr class="rightRow">
+      <td class="selectionRow">
+        <md-select [disabled]="!DL.UserAccess.ReportSearch" placeholder="Year" [(ngModel)]="yearSelected">
+          <md-option *ngFor="let year of DL.ReportYears" [value]="year">
+            {{year}}
+          </md-option>
+        </md-select>
+        <md-select [disabled]="!DL.UserAccess.ReportSearch" placeholder="Month" [(ngModel)]="monthSelected">
+          <md-option *ngFor="let month of DL.Months" [value]="month.Value">
+            {{month.Name}}
+          </md-option>
+        </md-select>
+      </td>
+    </tr>
+    <tr class="rightRow">
+      <td>
+        <button md-fab [disabled]="!DL.UserAccess.ReportSearch" (click)="ReportView()" mdTooltip="View reports" mdTooltipPosition="above"><md-icon>search</md-icon></button>
+      </td>
+    </tr>
+  </table>
+</div>

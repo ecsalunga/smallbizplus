@@ -1,0 +1,117 @@
+<div>
+  <div class="item">
+    <div class="itemHeader">
+      <div class="itemName">Items and Events</div>
+    </div>
+    <table>
+      <tr>
+        <td style="vertical-align: top;">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  Name
+                </th>
+                <th class="totalColumn">
+                  QTY
+                </th>
+                <th class="totalColumn">
+                  Amount
+                </th>
+              </tr>
+            </thead>
+            <ng-container *ngFor="let info of model.Transaction.Items">
+              <tr>
+                <td>
+                  {{ info.Description }}
+                </td>
+                <td class="totalColumn">
+                  {{ info.Quantity }}
+                </td>
+                <td class="totalColumn">
+                  {{ info.Total | number:'1.2-2'}}
+                </td>
+              </tr>
+            </ng-container>
+            <tr class="blankCell">
+              <td>
+                Total
+              </td>
+              <td class="totalColumn">
+                {{ model.Transaction.Count }}
+              </td>
+              <td class="totalColumn">
+                {{ model.Transaction.Amount | number:'1.2-2'}}
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td class="tdSeparator"></td>
+        <td style="vertical-align: top;">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  Time
+                </th>
+                <th>
+                  Action
+                </th>
+              </tr>
+            </thead>
+            <ng-container *ngFor="let info of model.Actions">
+              <tr>
+                <td>
+                  {{ info.Name }}
+                </td>
+                <td>
+                  {{ GetDate(info.Value) | date : 'shortTime' }}
+                </td>
+              </tr>
+            </ng-container>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div> 
+    <md-form-field class="longText">
+      <input id="txtBuyer" mdInput readonly placeholder="Member" [(ngModel)]="model.Transaction.BuyerName"  />
+    </md-form-field>
+  </div>
+  <div> 
+    <md-form-field class="fullWidth">
+      <input id="txtContact" mdInput [readonly]="IsDone()" placeholder="Contact" [(ngModel)]="model.Contact"  />
+    </md-form-field>
+  </div>
+  <div> 
+    <md-form-field class="fullWidth">
+      <input id="txtAddress" mdInput [readonly]="IsDone()" placeholder="Address" [(ngModel)]="model.Address"  />
+    </md-form-field>
+  </div>
+  <div class="selectionRow">
+    <md-select placeholder="Assigned" [disabled]="IsDone()" class="longText" [(ngModel)]="selectedUser">
+      <md-option *ngFor="let item of DL.UserSelections" [value]="item">
+        {{ item.Name }}
+      </md-option>
+    </md-select>
+    <md-select placeholder="Status" [disabled]="IsDone()" class="longText" [(ngModel)]="selectedStatus">
+      <md-option *ngFor="let status of DL.DeliveryStatuses" [value]="status">
+        {{ status }}
+      </md-option>
+    </md-select>
+  </div>
+  <div class="hSpacer"></div>
+  <table>
+    <tr class="rightRow">
+      <td *ngIf="!model.IsTransaction && model.Status == DL.STATUS_DELIVERED">
+        <button md-fab color="primary" (click)="GenerateTransaction()" mdTooltip="Generate transaction" mdTooltipPosition="above"><md-icon>receipt</md-icon></button>
+      </td>
+      <td>
+        <button md-fab color="warn" *ngIf="CanDelete()" (click)="Delete()" [disabled]="!DL.UserAccess.DeliveryDelete" mdTooltip="Delete" mdTooltipPosition="above"><md-icon>delete</md-icon></button>
+        <button md-fab *ngIf="!IsDone()" (click)="Save()" [disabled]="!DL.UserAccess.DeliveryEdit" mdTooltip="Save" mdTooltipPosition="above"><md-icon>save</md-icon></button>
+        <button md-fab (click)="LoadList()" mdTooltip="Back to list" mdTooltipPosition="above"><md-icon>assignment_return</md-icon></button>
+      </td>
+    </tr>
+  </table>
+</div>

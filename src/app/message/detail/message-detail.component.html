@@ -1,0 +1,23 @@
+<div>
+  <div>
+    <md-select class="longText" [disabled]="model.key != null" placeholder="With" [(ngModel)]="user">
+      <ng-container *ngFor="let user of this.DL.UserAll">
+        <md-option *ngIf="!(!user.UID)" [value]="user">
+          {{ user.Name }}
+        </md-option>
+      </ng-container>
+    </md-select>
+  </div>
+  <div class="hSpacer"></div>
+  <table>
+    <tr class="rightRow">
+      <td>
+        <button md-fab *ngIf="model.key != null" color="warn" (click)="Delete()" [disabled]="!DL.UserAccess.MessageManage" mdTooltip="Delete" mdTooltipPosition="above"><md-icon>delete</md-icon></button>
+      </td>
+      <td>
+        <button md-fab *ngIf="model.key == null" (click)="Save()" [disabled]="!DL.UserAccess.MessageManage || !user" mdTooltip="Save" mdTooltipPosition="above"><md-icon>save</md-icon></button>
+        <button md-fab (click)="LoadList()" mdTooltip="Back to list" mdTooltipPosition="above"><md-icon>assignment_return</md-icon></button>
+      </td>
+    </tr>
+  </table>
+</div>

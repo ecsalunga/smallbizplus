@@ -1,0 +1,100 @@
+<ng-container *ngFor="let order of DL.ShowcaseUserOrders">
+  <div class="item">
+    <div class="itemHeader">
+      <div class="itemName">{{ order.Status }} ( <span class="mainColor">{{ GetDate(order.ActionDate) | date : 'short' }}</span> )</div>
+    </div>
+    <div class="subContent">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              Description
+            </th>
+            <th class="totalColumn">
+              Price / QTY
+            </th>
+            <th class="totalColumn">
+              Total
+            </th>
+            <th *ngIf="order.Status == DL.STATUS_SELECTING" class="rightRow">
+              Action
+            </th>
+          </tr>
+        </thead>
+        <ng-container *ngFor="let info of order.Items">
+          <tr>
+            <td>
+              {{ info.Description }}
+            </td>
+            <td class="totalColumn">
+              {{ info.Price | number:'1.2-2' }} x {{ info.Quantity }}
+            </td>
+            <td class="totalColumn">
+              {{ info.Total | number:'1.2-2' }}
+            </td>
+            <td *ngIf="order.Status == DL.STATUS_SELECTING && info.Code != DL.KEYSUBSCRIPTION" class="rightRow">
+              <button md-mini-fab color="warn" (click)="Delete(info)" mdTooltip="Delete" mdTooltipPosition="above"><md-icon>delete</md-icon></button>
+            </td>
+          </tr>
+        </ng-container>
+        <tr class="blankCell">
+          <td>
+            Total
+          </td>
+          <td class="totalColumn">
+            {{ order.Count }}
+          </td>
+          <td class="totalColumn">
+            {{ DL.CURRENCY }} {{ order.Amount | number:'1.2-2' }}
+          </td>
+          <td *ngIf="order.Status == DL.STATUS_SELECTING"></td>
+        </tr>
+      </table>
+      <div class="hSpacer"></div>
+      <div class="itemControl mainColor">
+        <div class="cartSelection">
+          <div *ngIf="!isCheckingout && order.Status == DL.STATUS_SELECTING">
+            <button md-raised-button (click)="ShowCheckout(order)">
+              <md-icon>done</md-icon>
+              <span>Checkout</span>
+            </button>
+          </div>
+          <div *ngIf="isCheckingout && order.Status == DL.STATUS_SELECTING">
+            <div *ngIf="DL.HasMissingProfileData()" class="bad warning">
+              {{ DL.MSG_MISSING_PROFILE_DATA }}
+            </div>
+            <div class="controls">
+              <button md-raised-button (click)="HideCheckout(order)">
+              <md-icon>assignment_return</md-icon>
+              <span>Cancel</span>
+            </button>
+              <button md-raised-button (click)="Checkout(order)">
+              <md-icon>done_all</md-icon>
+              <span>Confirm</span>
+            </button>
+            </div>
+          </div>
+          <div *ngIf="order.Status != DL.STATUS_SELECTING && order.Status != DL.STATUS_DONE">
+            <div class="visibility" *ngIf="order.Status == DL.STATUS_DELIVERED || order.Status == DL.STATUS_CANCELLED">
+              <button md-raised-button (click)="SetStatusDone(order)">
+                <md-icon>visibility_off</md-icon>
+                <span>Finished</span>
+              </button>
+            </div>
+            <button md-raised-button (click)="ViewStatus(order)">
+              <md-icon>event_note</md-icon>
+              <span>Check details</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="vSmallSpacer"></div>
+    </div>
+  </div>
+</ng-container>
+<div class="rightRow mainColor">
+  <button md-raised-button (click)="LoadList()" mdTooltip="Back to item selection" mdTooltipPosition="above">
+    <md-icon>add_shopping_cart</md-icon>
+    <span>Go to catalog</span>
+  </button>
+</div>

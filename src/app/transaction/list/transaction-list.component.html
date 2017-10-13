@@ -1,0 +1,68 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Member
+        </th>
+        <th>
+          Source
+        </th>
+        <th>
+          Time
+        </th>
+        <th class="totalColumn">
+          Amount
+        </th>
+        <th class="rightRow">
+          Action
+        </th>
+      </tr>
+    </thead>
+    <ng-container *ngFor="let tran of DL.Transactions">
+      <tr>
+        <td>
+          {{ tran.BuyerName }}
+        </td>
+        <td>
+          {{ tran.Source }}
+        </td>
+        <td>
+          {{ this.core.numberToDate(tran.ActionDate) | date : 'shortTime' }}
+        </td>
+        <td class="totalColumn">
+          {{ tran.Amount | number:'1.2-2' }}
+        </td>
+        <td class="rightRow">
+          <button md-mini-fab [disabled]="!DL.UserAccess.TransactionDetail" (click)="SelectTransaction(tran)" mdTooltip="View"><md-icon>pageview</md-icon></button>
+        </td>
+      </tr>
+    </ng-container>
+    <tr class="blankCell">
+      <td>
+        Total
+      </td>
+      <td class="totalColumn" colspan="3">
+        {{ DL.ReportSelected.SaleAmount | number:'1.2-2' }}
+      </td>
+      <td></td>
+    </tr>
+  </table>
+  <div class="hSpacer"></div>
+  <table>
+    <tr class="rightRow">
+      <td class="selectionRow">
+        <md-form-field class="date">
+          <input mdInput [disabled]="!DL.UserAccess.TransactionSearch" [mdDatepicker]="picker" placeholder="Report Date" [(ngModel)]="ReportDate">
+          <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+          <md-datepicker #picker></md-datepicker>
+        </md-form-field>
+      </td>
+    </tr>
+    <tr class="rightRow">
+      <td>
+        <button md-fab [disabled]="!ReportDate || !DL.UserAccess.TransactionSearch" (click)="TransactionView()" mdTooltip="View transactions" mdTooltipPosition="above"><md-icon>search</md-icon></button>
+      </td>
+    </tr>
+  </table>
+</div>

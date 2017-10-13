@@ -1,0 +1,60 @@
+<div>
+  <div>
+    <md-form-field class="longText">
+      <input id="txtName" mdInput placeholder="Name" [(ngModel)]="model.Name" [formControl]="nameValidator" />
+      <md-error *ngIf="nameValidator.hasError('required')">
+        Name is <strong>required</strong>
+      </md-error>
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field class="longText">
+      <input id="txtEmail" readonly mdInput placeholder="Email" [(ngModel)]="model.Email" />
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field class="longText">
+      <input id="txtAddress1" mdInput placeholder="Address #1" [(ngModel)]="model.Address1" />
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field class="longText">
+      <input id="txtAddress2" mdInput placeholder="Address #2" [(ngModel)]="model.Address2" />
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field>
+      <input id="txtContact1" mdInput placeholder="Contact #1" [(ngModel)]="model.Contact1" />
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field>
+      <input id="txtContact2" mdInput placeholder="Contact #2" [(ngModel)]="model.Contact2" />
+    </md-form-field>
+  </div>
+  <div class="vSmallSpacer"></div>
+  <div class="imageContainer">
+    <img class="fullWidth" src="{{model.SystemImageURL}}" (load)="ImageLoaded()">
+    <div class="imageEdit" [hidden]="!isLoaded || !DL.UserAccess.UserProfileEdit">
+      <div (click)="SelectFile()">Update</div>
+      <div (click)="ResetPicture()">Reset</div>
+    </div>
+  </div>
+  <div class="hSpacer"></div>
+  <table>
+    <tr class="rightRow mainColor">
+      <td>
+        <button md-raised-button (click)="DA.LogOut()" [disabled]="!DL.UserAccess.CanLogout" mdTooltip="Log Out" mdTooltipPosition="above">
+          <md-icon>exit_to_app</md-icon>
+          <span>Log Out</span>
+        </button>
+      </td>
+      <td>
+        <button md-raised-button (click)="Save()" [disabled]="nameValidator.invalid || !DL.UserAccess.UserProfileEdit" mdTooltip="Save" mdTooltipPosition="above">
+          <md-icon>save</md-icon>
+          <span>Update</span>
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>

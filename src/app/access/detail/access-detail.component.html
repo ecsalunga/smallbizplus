@@ -1,0 +1,759 @@
+<div>
+  <div>
+    <md-form-field>
+      <input id="txtName" mdInput placeholder="Name" [(ngModel)]="model.Name" />
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field class="fullWidth">
+      <textarea id="txtDescrption" mdInput placeholder="Description" [(ngModel)]="model.Description"></textarea>
+    </md-form-field>
+  </div>
+  <div>
+    <md-select placeholder="Start Module" [(ngModel)]="model.ModuleStart">
+      <md-option *ngFor="let module of DL.Modules" [value]="module.Value">
+        {{ module.Name }}
+      </md-option>
+    </md-select>
+  </div>
+  <div class="vSmallSpacer"></div>
+  <div>
+    <md-checkbox [(ngModel)]="model.CanLogout">Can Log-Out</md-checkbox>
+  </div>
+  <div class="vSmallSpacer"></div>
+  <table>
+    <tr>
+      <td colspan="3" class="accessLabel">Access</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.AccessView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.AccessAdd">
+          Add
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.AccessEdit">
+          Edit
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Article</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ArticleView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ArticleAdd">
+          Add
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ArticleEdit">
+          Edit
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Gallery</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.GalleryView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.GalleryAdd">
+          Add
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.GalleryEdit">
+          Edit
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <table style="margin-left: 10px;">
+          <tr>
+            <td colspan="3" class="accessLabel">Photo</td>
+          </tr>
+          <tr>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.GalleryPhotoView">
+                View
+              </md-slide-toggle>
+            </td>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.GalleryPhotoAdd">
+                Add
+              </md-slide-toggle>
+            </td>
+            <td>
+              <md-slide-toggle [(ngModel)]="model.GalleryPhotoEdit">
+                Edit
+              </md-slide-toggle>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Expense</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ExpenseView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ExpenseAdd">
+          Add
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ExpenseDelete">
+          Delete
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ExpenseEditDate">
+          Edit Date
+        </md-slide-toggle>
+      </td>
+      <td colspan="2">
+        <md-slide-toggle [(ngModel)]="model.ExpenseSearch">
+          Search
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Member</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.MemberView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.MemberAdd">
+          Add
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.MemberEdit">
+          Edit
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <md-slide-toggle [(ngModel)]="model.MemberLogout">
+          Log Out Member
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Message</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.MessageView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.MessageManage">
+          Manage
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.MessagePop">
+          Pop
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Product</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ProductView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ProductAdd">
+          Add
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ProductEdit">
+          Edit
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <md-slide-toggle [(ngModel)]="model.ProductIn">
+          Stock In
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Borrow</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.BorrowView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.BorrowAdd">
+          Add
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.BorrowEdit">
+          Edit
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <md-slide-toggle [(ngModel)]="model.BorrowDelete">
+          Delete
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Subscription</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.SubscriptionView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.SubscriptionAdd">
+          Add
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.SubscriptionEdit">
+          Edit
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <table style="margin-left: 10px;">
+          <tr>
+            <td colspan="3" class="accessLabel">Product</td>
+          </tr>
+          <tr>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.SubscriptionProductView">
+                View
+              </md-slide-toggle>
+            </td>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.SubscriptionProductAdd">
+                Add
+              </md-slide-toggle>
+            </td>
+            <td>
+              <md-slide-toggle [(ngModel)]="model.SubscriptionProductDelete">
+                Delete
+              </md-slide-toggle>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <table style="margin-left: 10px;">
+          <tr>
+            <td colspan="3" class="accessLabel">Subscriber</td>
+          </tr>
+          <tr>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.SubscriptionSubscriberView">
+                View
+              </md-slide-toggle>
+            </td>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.SubscriptionSubscriberAdd">
+                Add
+              </md-slide-toggle>
+            </td>
+            <td>
+              <md-slide-toggle [(ngModel)]="model.SubscriptionSubscriberDelete">
+                Delete
+              </md-slide-toggle>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <table style="margin-left: 10px;">
+          <tr>
+            <td colspan="3" class="accessLabel">Report</td>
+          </tr>
+          <tr>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.SubscriptionReportView">
+                View
+              </md-slide-toggle>
+            </td>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.SubscriptionReportAdd">
+                Add
+              </md-slide-toggle>
+            </td>
+            <td>
+              <md-slide-toggle [(ngModel)]="model.SubscriptionReportDelete">
+                Delete
+              </md-slide-toggle>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Service</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ServiceView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ServiceAdd">
+          Add
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ServiceEdit">
+          Edit
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <table style="margin-left: 10px;">
+          <tr>
+            <td colspan="3" class="accessLabel">Schedule</td>
+          </tr>
+          <tr>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.ServiceScheduleView">
+                View
+              </md-slide-toggle>
+            </td>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.ServiceScheduleAdd">
+                Add
+              </md-slide-toggle>
+            </td>
+            <td>
+              <md-slide-toggle [(ngModel)]="model.ServiceScheduleDelete">
+                Delete
+              </md-slide-toggle>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <table style="margin-left: 10px;">
+          <tr>
+            <td colspan="3" class="accessLabel">Reservation</td>
+          </tr>
+          <tr>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.ServiceReservationView">
+                View
+              </md-slide-toggle>
+            </td>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.ServiceReservationEdit">
+                Edit
+              </md-slide-toggle>
+            </td>
+            <td>
+              <md-slide-toggle [(ngModel)]="model.ServiceReservationDelete">
+                Delete
+              </md-slide-toggle>
+            </td>
+          </tr>
+          <tr>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.ServiceReservationDoneView">
+                View Done
+              </md-slide-toggle>
+            </td>
+            <td class="subAccess" colspan="2">
+              <md-slide-toggle [(ngModel)]="model.ServiceReserveMember">
+                Reserve Member
+              </md-slide-toggle>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Cashflow</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ReportView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td colspan="2">
+        <md-slide-toggle [(ngModel)]="model.ReportSearch">
+          Search
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <table style="margin-left: 10px;">
+          <tr>
+            <td colspan="3" class="accessLabel">Balancing</td>
+          </tr>
+          <tr>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.ReportBalanceView">
+                View
+              </md-slide-toggle>
+            </td>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.ReportBalanceAdd">
+                Add
+              </md-slide-toggle>
+            </td>
+            <td>
+              <md-slide-toggle [(ngModel)]="model.ReportBalanceEdit">
+                Edit
+              </md-slide-toggle>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3" class="accessLabel">Generating</td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <md-slide-toggle [(ngModel)]="model.ReportBalanceViewComputed">
+                View Computed
+              </md-slide-toggle>
+            </td>
+            <td>
+              <md-slide-toggle [(ngModel)]="model.ReportBalanceEditDate">
+                Edit Date
+              </md-slide-toggle>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <md-slide-toggle [(ngModel)]="model.ReportBalanceSummaryView">
+                View Summary
+              </md-slide-toggle>
+            </td>
+            <td>
+              <md-slide-toggle [(ngModel)]="model.ReportBalanceRegenerate">
+                Regenerate
+              </md-slide-toggle>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Snapshot</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.SnapshotView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.SnapshotAdd">
+          Add
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.SnapshotReview">
+          Review
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Sell</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.SellView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.SellAdd">
+          Add
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.SellDelete">
+          Delete
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.SellDiscount">
+          Discount
+        </md-slide-toggle>
+      </td>
+      <td colspan="2">
+        <md-slide-toggle [(ngModel)]="model.SellManageSeller">
+          Manage Seller
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Delivery</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.DeliveryView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.DeliveryEdit">
+          Edit
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.DeliveryDelete">
+          Delete
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <md-slide-toggle [(ngModel)]="model.DeliveryDoneView">
+          View Done
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Showcase</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ShowcaseView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ShowcaseAdd">
+          Add
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ShowcaseEdit">
+          Edit
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <table style="margin-left: 10px;">
+          <tr>
+            <td colspan="3" class="accessLabel">Schedule</td>
+          </tr>
+          <tr>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.ShowcaseScheduleView">
+                View
+              </md-slide-toggle>
+            </td>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.ShowcaseScheduleAdd">
+                Add
+              </md-slide-toggle>
+            </td>
+            <td>
+              <md-slide-toggle [(ngModel)]="model.ShowcaseScheduleDelete">
+                Delete
+              </md-slide-toggle>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <table style="margin-left: 10px;">
+          <tr>
+            <td colspan="3" class="accessLabel">Order</td>
+          </tr>
+          <tr>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.ShowcaseOrderView">
+                View
+              </md-slide-toggle>
+            </td>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.ShowcaseOrderEdit">
+                Edit
+              </md-slide-toggle>
+            </td>
+            <td>
+              <md-slide-toggle [(ngModel)]="model.ShowcaseOrderDelete">
+                Delete
+              </md-slide-toggle>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Transaction</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.TransactionView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.TransactionDetail">
+          Detail
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.TransactionSearch">
+          Search
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ProductCancel">
+          Cancel
+        </md-slide-toggle>
+      </td>
+      <td colspan="2">
+        <md-slide-toggle [(ngModel)]="model.ProductCancelView">
+          View Cancelled
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">User</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.UserView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.UserEdit">
+          Edit
+        </md-slide-toggle>
+      </td>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.UserProfileEdit">
+          Save Profile
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <table style="margin-left: 10px;">
+          <tr>
+            <td colspan="3" class="accessLabel">Access</td>
+          </tr>
+          <tr>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.UserAccessEdit">
+                Edit
+              </md-slide-toggle>
+            </td>
+            <td class="subAccess">
+              <md-slide-toggle [(ngModel)]="model.UserGroupEdit">
+                Edit Group
+              </md-slide-toggle>
+            </td>
+            <td>
+              <md-slide-toggle [(ngModel)]="model.UserCommandLogout">
+                Logout
+              </md-slide-toggle>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">Module Settings</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.ModuleSettingView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td colspan="2">
+        <md-slide-toggle [(ngModel)]="model.ModuleSettingEdit">
+          Edit
+        </md-slide-toggle>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3" class="accessLabel">System Settings</td>
+    </tr>
+    <tr>
+      <td>
+        <md-slide-toggle [(ngModel)]="model.SystemSettingView">
+          View
+        </md-slide-toggle>
+      </td>
+      <td colspan="2">
+        <md-slide-toggle [(ngModel)]="model.SystemSettingEdit">
+          Edit
+        </md-slide-toggle>
+      </td>
+    </tr>
+  </table>
+  <div class="hSpacer"></div>
+  <div class="rightRow">
+    <button md-fab (click)="Save()" [disabled]="IsSaveDisabled()" mdTooltip="Save" mdTooltipPosition="above"><md-icon>save</md-icon></button>
+    <button md-fab (click)="LoadList()" mdTooltip="Back to list" mdTooltipPosition="above"><md-icon>assignment_return</md-icon></button>
+  </div>
+</div>

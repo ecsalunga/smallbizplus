@@ -1,0 +1,47 @@
+<div>
+  <div>
+    <md-form-field>
+      <input id="txtCode" mdInput placeholder="Code" [(ngModel)]="model.Code" (change)="CodeChange()" [formControl]="codeValidator" />
+      <md-error *ngIf="codeValidator.hasError('required')">
+        Code is <strong>required</strong>
+      </md-error>
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field class="longText">
+      <input id="txtDescription" mdInput placeholder="Description" [(ngModel)]="model.Description" [formControl]="descriptionValidator" />
+      <md-error *ngIf="descriptionValidator.hasError('required')">
+        Description is <strong>required</strong>
+      </md-error>
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field>
+      <input id="txtPrice" type="number" mdInput placeholder="Price" [(ngModel)]="model.Price" [formControl]="priceValidator" />
+      <md-error *ngIf="priceValidator.hasError('required')">
+        Price is <strong>required</strong>
+      </md-error>
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field class="shortText">
+      <input id="txtQuantity" [disabled]="!DL.UserAccess.ProductIn" type="number" mdInput placeholder="Quantity" [(ngModel)]="model.Quantity" />
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field class="shortText">
+      <input id="txtNotifyQuantity" type="number" mdInput placeholder="Notify Quantity" [(ngModel)]="model.QuantityNotify" />
+    </md-form-field>
+  </div>
+  <div>
+    <md-checkbox [(ngModel)]="model.SupportSnapshot">Support Snapshot</md-checkbox>
+  </div>
+  <div>
+    <md-checkbox [(ngModel)]="model.SupportBorrow">Support Borrow</md-checkbox>
+  </div>
+  <div class="hSpacer"></div>
+  <div class="rightRow">
+    <button md-fab (click)="Save()" [disabled]="!CanSave()" mdTooltip="Save" mdTooltipPosition="above"><md-icon>save</md-icon></button>
+    <button md-fab (click)="LoadList()" mdTooltip="Back to list" mdTooltipPosition="above"><md-icon>assignment_return</md-icon></button>
+  </div>
+</div>

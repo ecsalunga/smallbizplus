@@ -1,0 +1,62 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Description
+        </th>
+        <th>
+          Price
+        </th>
+        <th>
+          Quantity
+        </th>
+        <th class="rightRow">
+          Action
+        </th>
+      </tr>
+    </thead>
+    <ng-container *ngFor="let product of DL.Products">
+      <tr>
+        <td>
+          {{product.Description}}
+        </td>
+        <td>
+          {{product.Price | number:'1.2-2'}}
+        </td>
+        <td class="{{ (product.Quantity > product.QuantityNotify) ?  'good' : 'bad' }}">
+          {{product.Quantity}}
+        </td>
+        <td class="rightRow">
+          <button md-mini-fab (click)="SelectProduct(product)" mdTooltip="View"><md-icon>pageview</md-icon></button>
+        </td>
+      </tr>
+    </ng-container>
+  </table>
+  <div class="hSpacer"></div>
+  <table>
+    <tr class="rightRow">
+      <td class="selectionRow" style="width: 60%">
+        <md-select [disabled]="!DL.UserAccess.ProductIn" class="longText" placeholder="Product" [(ngModel)]="model" (change)="ProductSelected()">
+          <md-option *ngFor="let product of DL.Products" [value]="product">
+            {{ product.Description }} ({{ product.Code }})
+          </md-option>
+        </md-select>
+        <md-select [disabled]="!DL.UserAccess.ProductIn" placeholder="Quantity" [(ngModel)]="quantitySelected">
+          <md-option *ngFor="let quantity of quantities" [value]="quantity">
+            {{quantity}}
+          </md-option>
+        </md-select>
+      </td>
+      <td></td>
+    </tr>
+    <tr class="rightRow">
+      <td>
+        <button md-fab [disabled]="!DL.UserAccess.ProductIn" [disabled]="!quantitySelected || !model" (click)="SuppyProduct()" mdTooltip="Add to supply" mdTooltipPosition="above"><md-icon>add_shopping_cart</md-icon></button>
+      </td>
+      <td>
+        <button md-fab [disabled]="!DL.UserAccess.ProductAdd" (click)="AddProduct()" mdTooltip="Add" mdTooltipPosition="above"><md-icon>note_add</md-icon></button>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,0 +1,71 @@
+<div>
+  <div>
+    <md-form-field class="longText">
+      <input id="txtName" mdInput placeholder="Name" [(ngModel)]="model.Name" [formControl]="nameValidator" />
+      <md-error *ngIf="nameValidator.hasError('required')">
+        Name is <strong>required</strong>
+      </md-error>
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field class="longText">
+      <input id="txtEmail" readonly mdInput placeholder="Email" [(ngModel)]="model.Email" />
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field class="longText">
+      <input id="txtAddress1" mdInput placeholder="Address #1" [(ngModel)]="model.Address1" />
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field class="longText">
+      <input id="txtAddress2" mdInput placeholder="Address #2" [(ngModel)]="model.Address2" />
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field>
+      <input id="txtContact1" mdInput placeholder="Contact #1" [(ngModel)]="model.Contact1" />
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field>
+      <input id="txtContact2" mdInput placeholder="Contact #2" [(ngModel)]="model.Contact2" />
+    </md-form-field>
+  </div>
+  <div>
+    <md-form-field class="date">
+      <input mdInput [mdDatepicker]="picker" placeholder="Join Date" [(ngModel)]="joinDate">
+      <md-datepicker-toggle mdSuffix [for]="picker"></md-datepicker-toggle>
+      <md-datepicker #picker></md-datepicker>
+    </md-form-field>
+  </div>
+  <div>
+    <md-slide-toggle [disabled]="!model.UID || !DL.UserAccess.UserGroupEdit" [(ngModel)]="model.IsSystemUser">
+      Sytem User
+    </md-slide-toggle>
+  </div>
+  <div class="vSmallSpacer"></div>
+  <div class="imageContainer">
+    <img class="fullWidth" src="{{model.SystemImageURL}}" (load)="ImageLoaded()">
+    <div class="imageEdit" [hidden]="IsHidden()">
+      <div (click)="SelectFile()">Update</div>
+      <div (click)="ResetPicture()">Reset</div>
+    </div>
+  </div>
+  <div class="vSmallSpacer"></div>
+  <div *ngIf="model.ActionDate != null">
+    Last login: {{ GetDate(model.ActionDate) | date : 'short' }}
+  </div>
+  <div class="hSpacer"></div>
+  <table>
+    <tr class="rightRow">
+      <td>
+        <button md-fab *ngIf="model.UID != null" (click)="Logout()" [disabled]="!DL.UserAccess.MemberLogout" mdTooltip="Logout" mdTooltipPosition="above"><md-icon>exit_to_app</md-icon></button>
+      </td>
+      <td>
+        <button md-fab (click)="Save()" [disabled]="nameValidator.invalid || (!DL.UserAccess.MemberEdit && model.key) || (!DL.UserAccess.MemberAdd && !model.key)" mdTooltip="Save" mdTooltipPosition="above"><md-icon>save</md-icon></button>
+        <button md-fab (click)="LoadList()" mdTooltip="Back to list" mdTooltipPosition="above"><md-icon>assignment_return</md-icon></button>
+      </td>
+    </tr>
+  </table>
+</div>

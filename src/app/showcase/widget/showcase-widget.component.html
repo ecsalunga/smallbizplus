@@ -1,0 +1,30 @@
+<div class="container">
+<ng-container *ngFor="let item of DL.ShowcaseToday">
+  <div class="{{ this.DL.ShowCaseTodayCount > 1 ? 'columnRes' : 'column' }}">
+  <div class="item">
+    <div class="itemHeader">
+      <div class="itemName">{{ item.ProductName }}</div>
+    </div>
+    <div class="{{ this.DL.ShowCaseTodayCount > 1 ? 'itemDescriptionRes' : 'itemDescription' }}">
+      {{ item.Description }}
+    </div>
+    <div class="{{ this.DL.ShowCaseTodayCount > 1 ? 'imageContainerRes' : 'imageContainer' }}">
+      <img class="fullWidth" src="{{ item.ImageURL }}" />
+    </div>
+    <div class="itemControl mainColor">
+      <div class="cartPrice">
+        {{ DL.CURRENCY }} {{ item.ProductPrice | number:'1.2-2' }}  {{ !item.MaxCart ?  "" : "| Max order: " + item.MaxCart}}
+      </div>
+      <div *ngIf="DL.User.IsMember" class="cartSelection">
+        <div>
+          <button *ngIf="CanAdd(item)" md-raised-button (click)="AddToCart(item)">
+            <md-icon>add_shopping_cart</md-icon>
+            <span>Add</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</ng-container>
+</div>

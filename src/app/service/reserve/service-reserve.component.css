@@ -1,0 +1,42 @@
+.fullWidth {
+    width: 100%;
+}
+
+md-form-field {
+    font-size: 16px;
+}
+
+.date {
+    width: 120px;
+}
+
+.itemControl {
+    overflow: auto;
+    padding: 10px;
+}
+
+.shortText {
+    width: 120px;
+}
+
+.hour {
+    margin-right: 15px;
+    width: 100px;
+}
+
+.longText {
+    width: 250px;
+}
+
+.schedule {
+    width: 275px;
+}
+
+.warning {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.cartPrice {
+    margin-top: 10px;
+}

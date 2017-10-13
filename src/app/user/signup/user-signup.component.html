@@ -1,0 +1,54 @@
+<div>
+  <div>
+    <md-form-field class="longText">
+      <input mdInput [(ngModel)]="name" placeholder="Name" [formControl]="nameFormControl">
+      <md-error *ngIf="nameFormControl.hasError('required')">
+        Name is <strong>required</strong>
+      </md-error>
+    </md-form-field>
+  </div>
+  <div class="vSmallSpacer"></div>
+  <div>
+    <md-form-field class="longText">
+      <input mdInput [(ngModel)]="email" placeholder="Email" [formControl]="emailFormControl">
+      <md-error *ngIf="emailFormControl.hasError('pattern')">
+        Please enter a valid email address
+      </md-error>
+      <md-error *ngIf="emailFormControl.hasError('required')">
+        Email is <strong>required</strong>
+      </md-error>
+    </md-form-field>
+  </div>
+  <div class="vSmallSpacer"></div>
+  <div>
+    <md-form-field>
+      <input mdInput (change)="NotifyConfirm()" [(ngModel)]="password" name="password" type="password" placeholder="Password" [formControl]="passwordFormControl">
+      <md-error *ngIf="passwordFormControl.hasError('required')">
+        Password is <strong>required</strong>
+      </md-error>
+      <md-error *ngIf="passwordFormControl.hasError('minlength')">
+        Password should be at least <strong>6 characters</strong>
+      </md-error>
+    </md-form-field>
+  </div>
+  <div class="vSmallSpacer"></div>
+  <div>
+    <md-form-field>
+      <input mdInput [(ngModel)]="confirm" type="password" placeholder="Confirm" validateEqual="password" [formControl]="confirmFormControl">
+      <md-error *ngIf="confirmFormControl.hasError('required')">
+        Confirm password is <strong>required</strong>
+      </md-error>
+      <md-error *ngIf="confirmFormControl.hasError('PasswordMismatch')">
+        Password mismatch
+      </md-error>
+    </md-form-field>
+  </div>
+  <div class="hSpacer"></div>
+  <div class="rightRow mainColor">
+    <button md-raised-button [disabled]="nameFormControl.invalid || emailFormControl.invalid || passwordFormControl.invalid || (password != confirm)"
+      (click)="Save()" mdTooltip="Save" mdTooltipPosition="above">
+      <md-icon>save</md-icon>
+      <span>Create</span>
+    </button>
+  </div>
+</div>

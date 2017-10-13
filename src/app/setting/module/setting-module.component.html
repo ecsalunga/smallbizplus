@@ -1,0 +1,92 @@
+<div>
+  <div>
+    <table>
+      <tr>
+        <td class="items">
+          <div class="configLabel">
+            General
+          </div>
+          <div>
+            <md-checkbox [(ngModel)]="model.ModuleIsNotify">Show System Notification</md-checkbox>
+          </div>
+          <div>
+            <md-checkbox [(ngModel)]="model.PublicIsNotify">Show Public Notification</md-checkbox>
+          </div>
+          <div>
+            <md-checkbox [(ngModel)]="model.PromptMissingProfileData">Prompt Missing Profile Data</md-checkbox>
+          </div>
+          <div>
+            <md-select class="longRes" placeholder="Default Page" [(ngModel)]="model.DefaultPage">
+              <md-option *ngFor="let module of DL.PublicModules" [value]="module.Value">
+                {{ module.Name }}
+              </md-option>
+            </md-select>
+          </div>
+          <div class="vSmallSpacer"></div>
+          <div class="configLabel">
+            Home Page
+          </div>
+          <div>
+            <md-form-field>
+              <input id="txtHomeTitle" mdInput placeholder="Title" [(ngModel)]="model.HomeTitle" />
+            </md-form-field>
+          </div>
+          <div>
+            <md-select class="longRes" placeholder="Article" [(ngModel)]="model.HomeArticleKey">
+              <md-option *ngFor="let item of DL.Articles" [value]="item.key">
+                {{ item.Title }}
+              </md-option>
+            </md-select>
+          </div>
+          <div class="vSmallSpacer"></div>
+          <div class="configLabel">
+            Showcase
+          </div>
+          <div>
+            <md-form-field>
+              <input id="txtShowcseCartItemMax" type="number" mdInput placeholder="Max open cart" [(ngModel)]="model.ShowcseCartItemMax" />
+            </md-form-field>
+          </div>
+        </td>
+        <td class="tdSeparator"></td>
+        <td class="items second">
+          <div class="configLabel">
+            Delivery
+          </div>
+          <div>
+            <md-checkbox [(ngModel)]="model.DeliveryIsToggleSell">Toggle Sell</md-checkbox>
+          </div>
+          <div>
+            <md-checkbox [(ngModel)]="model.DeliveryIsToggleOrder">Toggle Order</md-checkbox>
+          </div>
+          <div>
+            <md-form-field>
+              <input id="txtDeliveryMaxTime" type="number" mdInput placeholder="Delivery Max Minutes" [(ngModel)]="model.DeliveryMaxMinutes" />
+            </md-form-field>
+          </div>
+          <div class="configLabel">
+            Service
+          </div>
+          <div>
+            <md-form-field>
+              <input id="txtServiceReservationMax" type="number" mdInput placeholder="Max open booking" [(ngModel)]="model.ServiceReservationMax" />
+            </md-form-field>
+          </div>
+          <div class="configLabel">
+            Expense
+          </div>
+          <div>
+            <button md-raised-button (click)="ExpenseLoadType()">
+              <md-icon>list</md-icon>
+              <span>Types...</span>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div class="hSpacer"></div>
+  <div class="rightRow">
+    <button md-fab (click)="Save()" [disabled]="!DL.UserAccess.ModuleSettingEdit" mdTooltip="Save" mdTooltipPosition="above"><md-icon>save</md-icon></button>
+  </div>
+</div>

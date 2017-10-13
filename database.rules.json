@@ -1,0 +1,137 @@
+{
+  "rules": {
+    "products": {
+      ".read": "true",
+      ".write": "true",
+      ".indexOn": "Description"
+    },
+    "services": {
+      "items": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": "Order"
+      },
+      "reservations": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": "ActionDate"
+      }
+    },
+    "showcases": {
+      "items": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": "Order"
+      },
+      "orders": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": "ActionDate"
+      }
+    },
+    "commands": {
+      ".read": "true",
+      ".write": "true",
+      ".indexOn": "UserKey"
+    },
+    "users": {
+      ".read": "true",
+      ".write": "true",
+      ".indexOn": "Name"
+    },
+    "accesses": {
+      ".read": "true",
+      ".write": "true",
+      ".indexOn": "Name"
+    },
+    "expenses": {
+      "items": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": "KeyMonth"
+      },
+      "types": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": "Name"
+      }
+    },
+    "transactions": {
+      "items": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": "KeyDay"
+      },
+      "deliveryInfos": {
+        ".read": "true",
+        ".write": "true"
+      },
+      "cancels": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": "KeyMonth"
+      }
+    },
+    "reports": {
+      ".read": "true",
+      ".write": "true",
+      ".indexOn": "KeyMonth"
+    },
+    "settings": {
+      "module": {
+        ".read": "true",
+        ".write": "true"
+      },
+      "system": {
+        ".read": "true",
+        ".write": "true"
+      }
+    },
+    "snapshots": {
+      ".read": "true",
+      ".write": "true",
+      ".indexOn": "KeyDay"
+    },
+    "articles": {
+      ".read": "true",
+      ".write": "true",
+      ".indexOn": "Order"
+    },
+    "messages": {
+      "conversations": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": "ActionDate"
+      },
+      "items": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": "ConversationKey"
+      }
+    },
+    "subscriptions": {
+      "items": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": "Name"
+      },
+      "quotas": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": "ActionDate"
+      }
+    },
+    "galleries": {
+      "items": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": "Order"
+      },
+      "photos": {
+        ".read": "true",
+        ".write": "true",
+        ".indexOn": ["GalleryKey", "Order"]
+      }
+    }
+  }
+}

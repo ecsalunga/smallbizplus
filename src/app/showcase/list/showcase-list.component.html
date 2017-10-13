@@ -1,0 +1,47 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Price
+        </th>
+        <th>
+          Visible
+        </th>
+        <th>
+          Order
+        </th>
+        <th class="rightRow" style="width: 30%;">
+          Action
+        </th>
+      </tr>
+    </thead>
+    <ng-container *ngFor="let item of DL.Showcases">
+      <tr>
+        <td>
+          {{ item.ProductName }}
+        </td>
+        <td>
+          {{ item.ProductPrice | number:'1.2-2' }}
+        </td>
+        <td class="{{ (Visibility(item) == 'Yes') ?  'good' : 'bad' }}">
+          {{ Visibility(item) }}
+        </td>
+        <td>
+          {{ item.Order }}
+        </td>
+        <td class="rightRow">
+          <button md-mini-fab [disabled]="!DL.UserAccess.ShowcaseScheduleView" (click)="ScheduleShowcase(item)" mdTooltip="Schedule"><md-icon>event</md-icon></button>
+          <button md-mini-fab (click)="SelectShowcase(item)" mdTooltip="View"><md-icon>pageview</md-icon></button>
+        </td>
+      </tr>
+    </ng-container>
+  </table>
+  <div class="hSpacer"></div>
+  <div class="rightRow">
+    <button md-fab [disabled]="!DL.UserAccess.ShowcaseAdd" (click)="AddItem()" mdTooltip="Add" mdTooltipPosition="above"><md-icon>note_add</md-icon></button>
+  </div>
+</div>

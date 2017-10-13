@@ -1,0 +1,72 @@
+<div>
+  <div class="items">
+    <div class="configLabel">
+      System
+    </div>
+    <div>
+      <md-form-field class="fullWidth">
+        <input id="txtName" mdInput placeholder="Name" [(ngModel)]="model.Name" />
+      </md-form-field>
+    </div>
+    <div>
+      <md-form-field class="fullWidth">
+        <input id="txtFooter" mdInput placeholder="Footer" [(ngModel)]="model.Footer" />
+      </md-form-field>
+    </div>
+    <div>
+      <md-checkbox [(ngModel)]="model.ShowFooterLogo">Show Footer Logo</md-checkbox>
+    </div>
+    <div class="vSmallSpacer"></div>
+    <div>
+      <md-form-field>
+        <input id="txtCurrencySymbol" mdInput placeholder="Currency Symbol" [(ngModel)]="model.CurrencySymbol" />
+      </md-form-field>
+    </div>
+    <div>
+      <md-form-field>
+        <input id="txtImageSize" type="number" mdInput placeholder="Max Image KB" [(ngModel)]="model.ImageSize" />
+      </md-form-field>
+    </div>
+    <div class="imageContainer">
+      <img class="fullWidth" src="{{model.DefaultImageURL}}" (load)="ImageLoaded()">
+      <div class="imageEdit" [hidden]="!isLoaded || !DL.UserAccess.SystemSettingEdit">
+        <div (click)="SelectFile()">Update Default Image</div>
+      </div>
+    </div>
+    <div class="vSmallSpacer"></div>
+    <div class="configLabel">
+      User
+    </div>
+    <div>
+      <md-select placeholder="Default Access" [(ngModel)]="model.DefaultAccess">
+        <md-option *ngFor="let access of DL.Accesses" [value]="access.key">
+          {{ access.Name }}
+        </md-option>
+      </md-select>
+    </div>
+    <div>
+      <md-select placeholder="Default System User" [(ngModel)]="model.DefaultIsSystemUser">
+        <md-option [value]="true">Yes</md-option>
+        <md-option [value]="false">No</md-option>
+      </md-select>
+    </div>
+    <div class="vSmallSpacer"></div>
+    <div class="configLabel">
+      Notifications
+    </div>
+    <div>
+      <md-form-field>
+        <input id="txtDuration" type="number" mdInput placeholder="Duration" [(ngModel)]="model.NotificationDuration" />
+      </md-form-field>
+    </div>
+    <div>
+      <md-form-field>
+        <input id="txtDurationLong" type="number" mdInput placeholder="Alert Duration" [(ngModel)]="model.NotificationSlowDuration" />
+      </md-form-field>
+    </div>
+  </div>
+  <div class="hSpacer"></div>
+  <div class="rightRow">
+    <button md-fab (click)="Save()" [disabled]="!DL.UserAccess.SystemSettingEdit" mdTooltip="Save" mdTooltipPosition="above"><md-icon>save</md-icon></button>
+  </div>
+</div>

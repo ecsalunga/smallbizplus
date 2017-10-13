@@ -1,0 +1,43 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Price
+        </th>
+        <th class="rightRow" style="width: 60%;">
+          Action
+        </th>
+      </tr>
+    </thead>
+    <ng-container *ngFor="let item of DL.Subscriptions">
+      <tr>
+        <td>
+          {{ item.Name }}
+        </td>
+        <td>
+          {{ item.Price | number:'1.2-2' }}
+        </td>
+        <td class="rightRow">
+          <button md-mini-fab [disabled]="!DL.UserAccess.SubscriptionSubscriberView" (click)="Subscriber(item)" mdTooltip="Subscriber"><md-icon>supervisor_account</md-icon></button>
+          <button md-mini-fab [disabled]="!DL.UserAccess.SubscriptionProductView" (click)="Product(item)" mdTooltip="Product"><md-icon>card_giftcard</md-icon></button>
+          <button md-mini-fab (click)="SelectItem(item)" mdTooltip="View"><md-icon>pageview</md-icon></button>
+        </td>
+      </tr>
+    </ng-container>
+  </table>
+  <div class="hSpacer"></div>
+  <table>
+    <tr class="rightRow">
+      <td>
+        <button md-fab (click)="QuotaReport()" [disabled]="!DL.UserAccess.SubscriptionReportView" mdTooltip="Purchase Report" mdTooltipPosition="above"><md-icon>assignment</md-icon></button>
+      </td>
+      <td>
+        <button md-fab [disabled]="!DL.UserAccess.SubscriptionAdd" (click)="AddItem()" mdTooltip="Add" mdTooltipPosition="above"><md-icon>note_add</md-icon></button>
+      </td>
+    </tr>
+  </table>
+</div>

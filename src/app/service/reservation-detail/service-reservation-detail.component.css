@@ -1,0 +1,27 @@
+.shortText {
+    width: 120px;
+}
+
+.itemSub {
+    padding: 3px;
+}
+
+.longText {
+    width: 250px;
+}
+
+.schedule {
+    width: 275px;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+md-form-field {
+    font-size: 16px;
+}
+
+.note {
+    font-size: 16px;
+}

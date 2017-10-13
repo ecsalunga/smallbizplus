@@ -1,0 +1,48 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Start
+        </th>
+        <th>
+          Last
+        </th>
+        <th>
+          Status
+        </th>
+        <th>
+          Assigned
+        </th>
+        <th class="rightRow">
+          Action
+        </th>
+      </tr>
+    </thead>
+    <ng-container *ngFor="let item of DL.DeliveryInfos">
+      <ng-container *ngIf="Visible(item)">
+        <tr>
+          <td>
+            {{ GetDate(item.ActionStart) | date : 'shortTime' }}
+          </td>
+          <td>
+            {{ GetDate(item.ActionDate) | date : 'shortTime' }}
+          </td>
+          <td class="{{ IsLate(item) ?  'bad' : 'good' }}">
+            {{ item.Status }}
+          </td>
+          <td>
+            {{ item.UserName }}
+          </td>
+          <td class="rightRow">
+            <button md-mini-fab (click)="Select(item)" mdTooltip="View" mdTooltipPosition="above"><md-icon>pageview</md-icon></button>
+          </td>
+        </tr>
+      </ng-container>
+    </ng-container>
+  </table>
+  <div class="hSpacer"></div>
+  <div class="rightRow">
+    <button md-fab color="warn" (click)="CleanDelete()" [disabled]="!HasClean() || !DL.UserAccess.DeliveryDelete"  mdTooltip="Remove all done" mdTooltipPosition="above"><md-icon>delete_sweep</md-icon></button>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>
+          Name
+        </th>
+        <th>
+          Access
+        </th>
+        <th class="rightRow">
+          Action
+        </th>
+      </tr>
+    </thead>
+    <ng-container *ngFor="let info of DL.Users">
+      <tr>
+        <td>
+          <img md-card-avatar src="{{info.SystemImageURL}}">
+        </td>
+        <td>
+          {{ info.Name }}
+        </td>
+        <td>
+          {{ info.AccessName }}
+        </td>
+        <td class="rightRow">
+          <button md-mini-fab (click)="SelectUser(info)" mdTooltip="View" mdTooltipPosition="above"><md-icon>pageview</md-icon></button>
+        </td>
+      </tr>
+    </ng-container>
+  </table>
+  <div class="hSpacer"></div>
+  <table>
+    <tr class="rightRow">
+      <td class="selectionRow">
+        <md-select [disabled]="!DL.UserAccess.UserAccessEdit" placeholder="User" [(ngModel)]="selectedUser">
+          <md-option *ngFor="let user of DL.Users" [value]="user">
+            {{user.Name}}
+          </md-option>
+        </md-select>
+        <md-select [disabled]="!DL.UserAccess.UserAccessEdit" placeholder="Access" [(ngModel)]="selectedAccess">
+          <md-option *ngFor="let access of DL.Accesses" [value]="access">
+            {{access.Name}}
+          </md-option>
+        </md-select>
+      </td>
+    </tr>
+    <tr class="rightRow">
+      <td>
+        <button md-fab [disabled]="!DL.UserAccess.UserAccessEdit || !selectedUser || !selectedAccess" (click)="AccessSet()" mdTooltip="Set access" mdTooltipPosition="above"><md-icon>accessibility</md-icon></button>
+      </td>
+    </tr>
+  </table>
+</div>

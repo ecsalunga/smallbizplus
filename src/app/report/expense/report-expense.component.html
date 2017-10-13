@@ -1,0 +1,79 @@
+<div>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          Date
+        </th>
+        <th>
+          Description
+        </th>
+        <th>
+          Created
+        </th>
+        <th class="totalColumn">
+          Amount
+        </th>
+        <th class="rightRow">
+          Action
+        </th>
+      </tr>
+    </thead>
+    <ng-container *ngFor="let info of DL.Expenses">
+      <tr>
+        <td>
+          {{ GetDate(info.KeyDay) | date : 'yyyy-MM-dd' }}
+        </td>
+        <td>
+          {{ info.Description }}
+        </td>
+        <td>
+          {{ this.core.numberToDate(info.ActionDate) | date : 'short' }}
+        </td>
+        <td class="totalColumn">
+          {{ info.Amount | number:'1.2-2' }}
+        </td>
+        <td class="rightRow">
+          <button md-mini-fab (click)="SelectItem(info)" mdTooltip="View"><md-icon>pageview</md-icon></button>
+        </td>
+      </tr> 
+    </ng-container>
+    <tr class="blankCell">
+      <td>
+        Total
+      </td>
+      <td></td>
+      <td></td>
+      <td class="totalColumn">
+        {{ DL.ExpenseTotal | number:'1.2-2'}}
+      </td>
+      <td></td>
+    </tr>
+  </table>
+  <div class="hSpacer"></div>
+  <table>
+    <tr class="rightRow">
+      <td class="selectionRow" style="width: 60%">
+        <md-select [disabled]="!DL.UserAccess.ExpenseSearch" placeholder="Year" [(ngModel)]="yearSelected">
+          <md-option *ngFor="let year of DL.ReportYears" [value]="year">
+            {{year}}
+          </md-option>
+        </md-select>
+        <md-select [disabled]="!DL.UserAccess.ExpenseSearch" placeholder="Month" [(ngModel)]="monthSelected">
+          <md-option *ngFor="let month of DL.Months" [value]="month.Value">
+            {{month.Name}}
+          </md-option>
+        </md-select>
+      </td>
+      <td></td>
+    </tr>
+    <tr class="rightRow">
+      <td>
+        <button md-fab [disabled]="!DL.UserAccess.ExpenseSearch" (click)="View()" mdTooltip="View expenses" mdTooltipPosition="above"><md-icon>search</md-icon></button>
+      </td>
+      <td>
+        <button md-fab [disabled]="!DL.UserAccess.ExpenseAdd" (click)="AddItem()" mdTooltip="Add" mdTooltipPosition="above"><md-icon>note_add</md-icon></button>
+      </td>
+    </tr>
+  </table>
+</div>

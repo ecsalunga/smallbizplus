@@ -1,0 +1,31 @@
+<div>
+  <div class="chat">
+    <div class="mainColor">
+      <button md-mini-fab (click)="GotoMessage()" mdTooltip="Go to message" mdTooltipPosition="above">
+        <md-icon>message</md-icon>
+      </button>
+      <div class="close">
+        <button md-mini-fab (click)="Close()" mdTooltip="Close window" mdTooltipPosition="above">
+          <md-icon>close</md-icon>
+        </button>
+      </div>
+    </div>
+    <div class="popHeader mainColor">
+      {{ ConvoWith }}
+    </div>
+    <div class="vSmallSpacer"></div>
+    <div class="convo" #chatMessages>
+      <ng-container *ngFor="let item of DL.Messages">
+        <div class="{{ IsFromYou(item) ?  'fromYou' : 'fromConvo' }}">
+          {{ item.Message }}
+        </div>
+      </ng-container>
+      <div class="vSmallSpacer"></div>
+    </div>
+    <div>
+      <md-form-field class="fullWidth">
+        <input id="txtMessage" (keyup.enter)="Send()" mdInput placeholder="Message" [(ngModel)]="message" />
+      </md-form-field>
+    </div>
+  </div>
+</div>

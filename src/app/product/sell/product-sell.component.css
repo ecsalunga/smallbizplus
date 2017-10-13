@@ -1,0 +1,15 @@
+md-checkbox {
+    margin-right: 20px;
+}
+
+md-form-field {
+    font-size: 16px;
+}
+
+.longText {
+    width: 180px;
+}
+
+.shortText {
+    width: 80px;
+}

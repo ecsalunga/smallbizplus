@@ -1,0 +1,149 @@
+<div>
+  <md-tab-group [selectedIndex]="DL.ShowcaseOrderTabIndex" dynamicHeight="true">
+    <md-tab>
+      <ng-template md-tab-label>
+        <md-icon>send</md-icon>&nbsp;Active
+      </ng-template>
+      <div class="listing">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                Date
+              </th>
+              <th>
+                Member
+              </th>
+              <th>
+                Status
+              </th>
+              <th class="totalColumn">
+                Amount / Count
+              </th>
+              <th class="rightRow">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <ng-container *ngFor="let item of DL.ShowcaseOrders">
+            <tr>
+              <td>
+                {{ GetDate(item.ActionDate) | date : 'short' }}
+              </td>
+              <td class="clickable mainColor" (click)="LoadUser(item)">
+                {{ item.BuyerName }}
+              </td>
+              <td>
+                {{ item.Status }}
+              </td>
+              <td class="totalColumn">
+                {{ item.Amount | number:'1.2-2' }} / {{ item.Count }}
+              </td>
+              <td class="rightRow">
+                <button md-mini-fab (click)="Select(item, 0)" mdTooltip="View" mdTooltipPosition="above"><md-icon>pageview</md-icon></button>
+              </td>
+            </tr>
+          </ng-container>
+        </table>
+      </div>
+    </md-tab>
+    <md-tab>
+      <ng-template md-tab-label>
+        <md-icon>watch_later</md-icon>&nbsp;Selecting
+      </ng-template>
+      <div class="listing">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                Date
+              </th>
+              <th>
+                Member
+              </th>
+              <th>
+                Status
+              </th>
+              <th class="totalColumn">
+                Amount / Count
+              </th>
+              <th class="rightRow">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <ng-container *ngFor="let item of DL.ShowcaseUserSelectingOrders">
+            <tr>
+              <td>
+                {{ GetDate(item.ActionDate) | date : 'short' }}
+              </td>
+              <td class="clickable mainColor" (click)="LoadUser(item)">
+                {{ item.BuyerName }}
+              </td>
+              <td>
+                {{ item.Status }}
+              </td>
+              <td class="totalColumn">
+                {{ item.Amount | number:'1.2-2' }} / {{ item.Count }}
+              </td>
+              <td class="rightRow">
+                <button md-mini-fab (click)="Select(item, 1)" mdTooltip="View" mdTooltipPosition="above"><md-icon>pageview</md-icon></button>
+              </td>
+            </tr>
+          </ng-container>
+        </table>
+      </div>
+    </md-tab>
+    <md-tab>
+      <ng-template md-tab-label>
+        <md-icon>done_all</md-icon>&nbsp;Done
+      </ng-template>
+      <div class="listing">
+        <table>
+          <thead>
+            <tr>
+              <th>
+                Date
+              </th>
+              <th>
+                Member
+              </th>
+              <th>
+                Status
+              </th>
+              <th class="totalColumn">
+                Amount / Count
+              </th>
+              <th class="rightRow">
+                Action
+              </th>
+            </tr>
+          </thead>
+          <ng-container *ngFor="let item of DL.ShowcaseUserDoneOrders">
+            <tr>
+              <td>
+                {{ GetDate(item.ActionDate) | date : 'short' }}
+              </td>
+              <td class="clickable mainColor" (click)="LoadUser(item)">
+                {{ item.BuyerName }}
+              </td>
+              <td>
+                {{ item.Status }}
+              </td>
+              <td class="totalColumn">
+                {{ item.Amount | number:'1.2-2' }} / {{ item.Count }}
+              </td>
+              <td class="rightRow">
+                <button md-mini-fab (click)="Select(item, 2)" mdTooltip="View" mdTooltipPosition="above"><md-icon>pageview</md-icon></button>
+              </td>
+            </tr>
+          </ng-container>
+        </table>
+        <div class="hSpacer"></div>
+        <div class="rightRow">
+          <button md-fab color="warn" (click)="CleanDelete()" [disabled]="!HasClean() || !DL.UserAccess.ShowcaseOrderDelete"  mdTooltip="Remove all done" mdTooltipPosition="above"><md-icon>delete_sweep</md-icon></button>
+        </div>
+      </div>
+    </md-tab>
+  </md-tab-group>
+</div>
