@@ -1,10 +1,11 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: "AIzaSyDUoThNZjhQ0iDWhw_nvPIhjBLrkrpGkoA",
-    authDomain: "temp-system.firebaseapp.com",
-    databaseURL: "https://temp-system.firebaseio.com",
-    storageBucket: "temp-system.appspot.com",
-    messagingSenderId: "1098645781584"
+    apiKey: "AIzaSyDnVV9nYsALKdOzSbkiv6EzodtfMJSatyQ",
+    authDomain: "smallbiz-plus.firebaseapp.com",
+    databaseURL: "https://smallbiz-plus.firebaseio.com",
+    projectId: "smallbiz-plus",
+    storageBucket: "smallbiz-plus.appspot.com",
+    messagingSenderId: "593008723386"
   }
 };
