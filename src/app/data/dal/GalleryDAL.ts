@@ -29,7 +29,7 @@ export class GalleryDAL {
     public LoadPhotos() {
         this.af.list(this.PATH_PHOTO, ref => {
             return ref.orderByChild('GalleryKey');
-        }).snapshotChanges().subscribe(snapshots => {
+        }).snapshotChanges().first().subscribe(snapshots => {
             this.DL.GalleryPhotos = new Array<GalleryPhotoInfo>();
             snapshots.forEach(snapshot => {
                 let info: GalleryPhotoInfo = snapshot.payload.val();
